@@ -1,12 +1,21 @@
+using chores_backend.Persistence;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDbContext<ChoresDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
+
+builder.Services.AddScoped<ChoresDbDataInitializer>();
 
 var app = builder.Build();
 
@@ -27,5 +36,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dataInitializer = scope.ServiceProvider.GetRequiredService<ChoresDbDataInitializer>();
+    await dataInitializer.SeedDataAync();
+}
 
 app.Run();

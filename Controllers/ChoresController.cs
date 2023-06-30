@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using chores_backend.Models;
+using chores_backend.Persistence;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,22 +13,18 @@ namespace chores_backend.Controllers
     [ApiController]
     public class ChoresController : ControllerBase
     {
-        private List<Chore> chores = new ()
+        private readonly ChoresDbContext _dbContext;
+
+        public ChoresController(ChoresDbContext context)
         {
-            new Chore() {Id = "1", Title = "Do the dishes", Description = "I want you to do the dishes"},
-            new Chore() {Id = "2", Title = "Clean the livingroom", Description = "I want you to clean the living room"},
-            new Chore() {Id = "3", Title = "Mow the lawn", Description = "I want you to mow the lawn"},
-            new Chore() {Id = "4", Title = "Remove dust in the kitchen", Description = "I want you to remove dust in the kitchen"},
-            new Chore() {Id = "5", Title = "Clean the toilet", Description = "I want you to clean the toilet"},
-            new Chore() {Id = "6", Title = "Clean your room", Description = "I want you to clean your room"},
-            new Chore() {Id = "7", Title = "Clean the bathroom", Description = "I want you to clean the bathroom"},
-            new Chore() {Id = "8", Title = "Clean the garage", Description = "I want you to clean the garage"},
-        };
+            _dbContext = context;
+        }
+        
         // GET: api/Chores
         [HttpGet]
         public IEnumerable<Chore> Get()
         {
-            return chores;
+            return _dbContext.Chores;
         }
 
         // GET: api/Chores/5
