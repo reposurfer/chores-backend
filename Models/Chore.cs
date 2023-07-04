@@ -1,5 +1,7 @@
 namespace chores_backend.Models;
 
+// This is a data class.
+
 public class Chore
 {
     public long Id { get; set; }

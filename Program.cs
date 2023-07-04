@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using chores_backend.Configurations;
 using chores_backend.Data;
 using chores_backend.Data.Repositories;
 using chores_backend.Models;
@@ -39,7 +40,6 @@ builder.Services.Configure<IdentityOptions>(options =>
     
     // User settings
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-._@+";
-    options.User.RequireUniqueEmail = true;
 });
 
 builder.Services.AddControllers();
@@ -51,6 +51,10 @@ builder.Services.AddSwaggerGen();
 // Cross-origin Resource Sharing
 
 builder.Services.AddCors();
+
+// Automapper
+
+builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
 // DI
 
