@@ -1,6 +1,6 @@
 using chores_backend.Models;
 
-namespace chores_backend.Persistence;
+namespace chores_backend.Data;
 
 public class ChoresDbDataInitializer
 {

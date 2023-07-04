@@ -2,7 +2,7 @@ using chores_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace chores_backend.Persistence.Configurations;
+namespace chores_backend.Data.Configurations;
 
 public class ChoreEntityTypeConfiguration : IEntityTypeConfiguration<Chore>
 {

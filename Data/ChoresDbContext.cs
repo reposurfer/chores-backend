@@ -1,17 +1,16 @@
+using chores_backend.Data.Configurations;
 using chores_backend.Models;
-using chores_backend.Persistence.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace chores_backend.Persistence;
+namespace chores_backend.Data;
 
-public class ChoresDbContext : DbContext
+public class ChoresDbContext : IdentityDbContext<User>
 {
     public DbSet<Chore> Chores { get; set; } = null!;
     
     public ChoresDbContext(DbContextOptions<ChoresDbContext> options) : base(options)
-    {
-        
-    }
+    {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
