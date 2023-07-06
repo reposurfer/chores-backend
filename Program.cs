@@ -23,6 +23,7 @@ builder.Services.AddDbContext<ChoresDbContext>(options =>
 var issuer = builder.Configuration.GetSection("Jwt").GetSection("Issuer").Value;
 var key = builder.Configuration.GetSection("Jwt").GetSection("Key").Value;
 
+//TODO: ValidateAudience error: Bearer error="invalid_token",error_description="The audience 'api' is invalid" set in AuthManager 
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,6 +35,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+        ValidateAudience = false,
         ValidIssuer = issuer,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
     };
@@ -132,11 +134,11 @@ app.UseCors(
 
 app.UseHttpsRedirection();
 
+app.MapControllers();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.MapControllers();
 
 // Seeding database
 
