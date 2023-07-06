@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using System.Text;
-using chores_backend.Configurations;
+using chores_backend.Utils;
 using chores_backend.Data;
 using chores_backend.Data.Repositories;
 using chores_backend.Models;

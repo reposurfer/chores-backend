@@ -2,7 +2,7 @@ using AutoMapper;
 using chores_backend.DTOs;
 using chores_backend.Models;
 
-namespace chores_backend.Configurations;
+namespace chores_backend.Utils;
 
 public class MapperInitializer : Profile
 {
