@@ -1,4 +1,5 @@
 using chores_backend.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace chores_backend.Data;
 
@@ -16,6 +17,11 @@ public class ChoresDbDataInitializer
         await _dbContext.Database.EnsureDeletedAsync();
         if (await _dbContext.Database.EnsureCreatedAsync())
         {
+            List<IdentityRole> roles = new List<IdentityRole>()
+            {
+                new() { Name = "Master", NormalizedName = "MASTER" }
+            };
+
             List<Chore> chores = new ()
             {
                 new Chore() { Title = "Do the dishes", Description = "I want you to do the dishes" },
@@ -27,7 +33,8 @@ public class ChoresDbDataInitializer
                 new Chore() { Title = "Clean the bathroom", Description = "I want you to clean the bathroom" },
                 new Chore() { Title = "Clean the garage", Description = "I want you to clean the garage" },
             };
-            
+
+            await _dbContext.Roles.AddRangeAsync(roles);
             await _dbContext.Chores.AddRangeAsync(chores);
             await _dbContext.SaveChangesAsync();
         }

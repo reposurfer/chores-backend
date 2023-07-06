@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using chores_backend.Data;
 using chores_backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace chores_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ChoresController : ControllerBase
     {
         private readonly IChoresRepository _choresRepository;
@@ -24,32 +26,32 @@ namespace chores_backend.Controllers
         [HttpGet]
         public IEnumerable<Chore> Get()
         {
-            //TODO: Changer orderby title to order by date added
+            //TODO: Change orderby title to order by date added
             return _choresRepository.GetAll().OrderBy(c => c.Title);
         }
 
         // GET: api/Chores/5
         [HttpGet("{id}", Name = "Get")]
-        private string Get(int id)
+        public string Get(int id)
         {
             return "value";
         }
 
         // POST: api/Chores
         [HttpPost]
-        private void Post([FromBody] string value)
+        public void Post([FromBody] string value)
         {
         }
 
         // PUT: api/Chores/5
         [HttpPut("{id}")]
-        private void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE: api/Chores/5
         [HttpDelete("{id}")]
-        private void Delete(int id)
+        public void Delete(int id)
         {
         }
     }
