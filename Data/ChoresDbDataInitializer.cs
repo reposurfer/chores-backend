@@ -6,10 +6,12 @@ namespace chores_backend.Data;
 public class ChoresDbDataInitializer
 {
     private readonly ChoresDbContext _dbContext;
+    private readonly UserManager<User> _userManager;
 
-    public ChoresDbDataInitializer(ChoresDbContext dbContext)
+    public ChoresDbDataInitializer(ChoresDbContext dbContext, UserManager<User> userManager)
     {
         _dbContext = dbContext;
+        _userManager = userManager;
     }
 
     public async Task SeedDataAync()
@@ -33,9 +35,22 @@ public class ChoresDbDataInitializer
                 new Chore() { Title = "Clean the bathroom", Description = "I want you to clean the bathroom" },
                 new Chore() { Title = "Clean the garage", Description = "I want you to clean the garage" },
             };
-
+            
             await _dbContext.Roles.AddRangeAsync(roles);
             await _dbContext.Chores.AddRangeAsync(chores);
+
+            ICollection<string> userRoles = new List<string>()
+            {
+                "Master"
+            };
+
+            User user = new User() { FirstName = "Stef", LastName = "Boerjan", UserName = "stefboerjan" };
+
+
+            await _userManager.CreateAsync(user, "Password1");
+            await _userManager.AddToRolesAsync(user, userRoles);
+
+            
             await _dbContext.SaveChangesAsync();
         }
     }

@@ -1,4 +1,6 @@
-namespace chores_backend.Models;
+using chores_backend.Models;
+
+namespace chores_backend.Data.Repositories;
 
 public interface IChoresRepository
 {
