@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace chores_backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ChoresController : ControllerBase

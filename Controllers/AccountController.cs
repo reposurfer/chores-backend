@@ -26,9 +26,12 @@ public class AccountController : ControllerBase
         _mapper = mapper;
         _authManager = authManager;
     }
-    
+
     [HttpPost]
     [Route("register")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Register([FromBody] RegisterDTO dto)
     {
         _logger.LogInformation($"Registration attempt for {dto.Username}");
@@ -48,23 +51,27 @@ public class AccountController : ControllerBase
                 {
                     ModelState.AddModelError(error.Code, error.Description);
                 }
+
                 return BadRequest(ModelState);
             }
-            
+
             await _userManager.AddToRolesAsync(user, dto.Roles);
             return Accepted();
         }
         catch (Exception e)
         {
             var user = await _userManager.FindByNameAsync(dto.Username);
-            if(user != null) await _userManager.DeleteAsync(user);
+            if (user != null) await _userManager.DeleteAsync(user);
             _logger.LogError(e, $"Something went wrong in the {nameof(Register)}");
             return Problem($"Something went wrong in the {nameof(Register)}", statusCode: 500);
         }
     }
-    
+
     [HttpPost]
     [Route("login")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login([FromBody] LoginDTO dto)
     {
         _logger.LogInformation($"Login attempt for {dto.Username}");
@@ -72,7 +79,7 @@ public class AccountController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-    
+
         try
         {
             if (!await _authManager.ValidateUser(dto))
@@ -88,4 +95,18 @@ public class AccountController : ControllerBase
             return Problem($"Something went wrong in the {nameof(Login)}", statusCode: 500);
         }
     }
+
+    /*[HttpGet("{id}")]
+    [Route("profile")]
+    public async Task<IActionResult> Profile(int id)
+    {
+        _logger.LogInformation($"Attempt to get profile information for user with id: {id}");
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user == null)
+        {
+            return BadRequest("User is not found");
+        }
+
+        return Ok(user);
+    }*/
 }

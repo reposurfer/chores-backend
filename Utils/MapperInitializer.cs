@@ -1,6 +1,6 @@
-using AutoMapper;
 using chores_backend.DTOs;
 using chores_backend.Models;
+using Profile = AutoMapper.Profile;
 
 namespace chores_backend.Utils;
 

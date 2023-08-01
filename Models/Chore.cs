@@ -13,6 +13,8 @@ public class Chore
     public DateTime DueDate { get; set; }
     
     public Status Status { get; set; }
+    
+    public Household Household { get; set; }
 }
 
 public enum Status

@@ -21,17 +21,17 @@ public class ChoresRepository : IChoresRepository
 
     public void Add(Chore chore)
     {
-        throw new NotImplementedException();
+        _chores.Add(chore);
     }
 
     public void Update(Chore chore)
     {
-        throw new NotImplementedException();
+        _chores.Update(chore);
     }
 
     public void Delete(Chore chore)
     {
-        throw new NotImplementedException();
+        _chores.Remove(chore);
     }
 
     public void SaveChanges()

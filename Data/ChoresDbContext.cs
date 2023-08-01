@@ -8,7 +8,9 @@ namespace chores_backend.Data;
 public class ChoresDbContext : IdentityDbContext<User>
 {
     public DbSet<Chore> Chores { get; set; } = null!;
-    
+
+    public DbSet<Household> Households { get; set; } = null!;
+
     public ChoresDbContext(DbContextOptions<ChoresDbContext> options) : base(options)
     {}
 

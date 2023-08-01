@@ -25,6 +25,10 @@ public class RegisterDTO : LoginDTO
     [Compare(nameof(Password), ErrorMessage = "Passwords do not match.")]
     public string ConfirmPassword { get; set; }
     
+    public string Description { get; set; }
+    
+    public string Picture { get; set; }
+    
     [Required]
     public ICollection<string> Roles { get; set; }
 }

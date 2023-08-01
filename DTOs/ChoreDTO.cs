@@ -14,13 +14,16 @@ public class CreateChoreDTO
     public string Description { get; set; }
     
     [Required]
-    public UserDTO Assignee { get; set; }
+    public UserDTO AssigneeId { get; set; }
     
     [Required]
     public DateTime DueDate { get; set; }
     
     [Required]
     public Status Status { get; set; }
+    
+    [Required]
+    public int HouseholdId { get; set; }
 }
 
 public class ChoreDTO : CreateChoreDTO
