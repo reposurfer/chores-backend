@@ -116,6 +116,7 @@ builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
 builder.Services.AddScoped<ChoresDbDataInitializer>();
 builder.Services.AddScoped<IChoresRepository, ChoresRepository>();
+builder.Services.AddScoped<IHouseholdsRepository, HouseholdRespository>();
 builder.Services.AddScoped<IAuthManager, AuthManager>();
 
 var app = builder.Build();
@@ -145,7 +146,7 @@ app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
     var dataInitializer = scope.ServiceProvider.GetRequiredService<ChoresDbDataInitializer>();
-    await dataInitializer.SeedDataAync();
+    await dataInitializer.SeedDataAsync();
 }
 
 app.Run();

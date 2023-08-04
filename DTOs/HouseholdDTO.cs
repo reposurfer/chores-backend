@@ -4,7 +4,7 @@ public class CreateHouseholdDTO
 {
     public string Name { get; set; }
     
-    public UserDTO Owner { get; set; }
+    public int OwnerId { get; set; }
 }
 
 public class HouseholdDTO : CreateHouseholdDTO

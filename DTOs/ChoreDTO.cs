@@ -14,7 +14,7 @@ public class CreateChoreDTO
     public string Description { get; set; }
     
     [Required]
-    public UserDTO AssigneeId { get; set; }
+    public int AssigneeId { get; set; }
     
     [Required]
     public DateTime DueDate { get; set; }
@@ -29,4 +29,8 @@ public class CreateChoreDTO
 public class ChoreDTO : CreateChoreDTO
 {
     public int Id { get; set; }
+    
+    public UserDTO Assignee { get; set; }
+    
+    public HouseholdDTO Household { get; set; }
 }

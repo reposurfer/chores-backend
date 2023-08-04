@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace chores_backend.Models;
 
+// This is a data class
 public class User : IdentityUser
 {
     public string FirstName { get; set; }

@@ -10,6 +10,7 @@ public class HouseholdEntityTypeConfiguration : IEntityTypeConfiguration<Househo
     {
         builder.ToTable("Households");
         builder.Property(h => h.Name).HasColumnName("Name").IsRequired();
-        builder.Property(h => h.Owner).HasColumnName("Owner").IsRequired();
+
+        builder.HasOne(h => h.Owner).WithMany();
     }
 }

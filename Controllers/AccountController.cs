@@ -2,13 +2,14 @@ using AutoMapper;
 using chores_backend.DTOs;
 using chores_backend.Models;
 using chores_backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace chores_backend.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class AccountController : ControllerBase
 {
     private readonly UserManager<User> _userManager;
@@ -70,8 +71,9 @@ public class AccountController : ControllerBase
     [HttpPost]
     [Route("login")]
     [ProducesResponseType(StatusCodes.Status202Accepted)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Login([FromBody] LoginDTO dto)
     {
         _logger.LogInformation($"Login attempt for {dto.Username}");
@@ -96,17 +98,31 @@ public class AccountController : ControllerBase
         }
     }
 
-    /*[HttpGet("{id}")]
+    [HttpGet]
+    [Authorize]
     [Route("profile")]
-    public async Task<IActionResult> Profile(int id)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Profile(string id)
     {
         _logger.LogInformation($"Attempt to get profile information for user with id: {id}");
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var user = await _userManager.FindByIdAsync(id);
         if (user == null)
         {
-            return BadRequest("User is not found");
+            return NotFound("User is not found");
         }
 
-        return Ok(user);
-    }*/
+        try
+        {
+            var userDto = _mapper.Map<UserDTO>(user);
+            return Ok(userDto);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Something went wrong in the {nameof(Login)}");
+            return Problem($"Something went wrong in the {nameof(Login)}", statusCode: 500);
+        }
+    }
 }

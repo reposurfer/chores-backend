@@ -18,5 +18,6 @@ public class ChoresDbContext : IdentityDbContext<User>
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new ChoreEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new HouseholdEntityTypeConfiguration());
     }
 }

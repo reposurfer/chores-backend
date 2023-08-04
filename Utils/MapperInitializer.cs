@@ -10,5 +10,7 @@ public class MapperInitializer : Profile
     {
         CreateMap<Chore, ChoreDTO>().ReverseMap();
         CreateMap<User, RegisterDTO>().ReverseMap();
+        CreateMap<Household, HouseholdDTO>().ReverseMap();
+        CreateMap<User, UserDTO>().ReverseMap();
     }
 }
